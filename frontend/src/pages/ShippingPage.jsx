@@ -24,10 +24,10 @@ const ShippingPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const apiUrl = import.meta.env.VITE_API_URL; // This uses the new Vercel variable
-      await axios.post(${apiUrl}/api/shipping/request, formData);
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+      await axios.post(`${apiUrl}/api/shipping/request`, formData);
       alert('Success! Your shipping request has been submitted.');
-      setFormData(initialFormData); 
+      setFormData(initialFormData); // Reset form after submission
     } catch (error) {
       alert('Error: Could not submit your request. Please check the details and try again.');
       console.error(error);
