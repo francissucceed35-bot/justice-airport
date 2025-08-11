@@ -1,7 +1,25 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('customerToken');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('customerToken');
+    localStorage.removeItem('token'); // Also clear admin token just in case
+    setIsLoggedIn(false);
+    navigate('/');
+    window.location.reload();
+  };
+
   return (
     <nav className='bg-gray-900 shadow-lg w-full'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -14,7 +32,14 @@ const Navbar = () => {
               <Link to='/flights' className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>Flights</Link>
               <Link to='/shipping' className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>Shipping</Link>
               <a href='#' className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>Contact Us</a>
-              <a href='#' className='bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700'>Login</a>
+              {isLoggedIn ? (
+                <button onClick={handleLogout} className='bg-red-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700'>Logout</button>
+              ) : (
+                <>
+                  <Link to='/signup' className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>Sign Up</Link>
+                  <Link to='/login' className='bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700'>Login</Link>
+                </>
+              )}
             </div>
           </div>
         </div>

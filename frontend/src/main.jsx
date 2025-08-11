@@ -7,25 +7,37 @@ import './index.css'
 import HomePage from './pages/HomePage.jsx';
 import FlightsPage from './pages/FlightsPage.jsx';
 import ShippingPage from './pages/ShippingPage.jsx';
+import AdminDashboardPage from './pages/AdminDashboardPage.jsx';
+import AdminFlightsListPage from './pages/AdminFlightsListPage.jsx';
+import AdminShippingListPage from './pages/AdminShippingListPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import CustomerSignupPage from './pages/CustomerSignupPage.jsx';
+import CustomerLoginPage from './pages/CustomerLoginPage.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: 'flights',
-        element: <FlightsPage />,
-      },
-      {
-        path: 'shipping',
-        element: <ShippingPage />,
+      { index: true, element: <HomePage /> },
+      { path: 'flights', element: <FlightsPage /> },
+      { path: 'shipping', element: <ShippingPage /> },
+      { path: 'signup', element: <CustomerSignupPage /> },
+      { path: 'login', element: <CustomerLoginPage /> },
+      { 
+        element: <ProtectedRoute />,
+        children: [
+          { path: 'admin', element: <AdminDashboardPage /> },
+          { path: 'admin/flights', element: <AdminFlightsListPage /> },
+          { path: 'admin/shipping', element: <AdminShippingListPage /> },
+        ]
       }
     ],
+  },
+  {
+    path: '/admin/login',
+    element: <LoginPage />,
   },
 ]);
 
