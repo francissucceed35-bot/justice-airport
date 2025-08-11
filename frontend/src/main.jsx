@@ -17,6 +17,8 @@ import CustomerLoginPage from './pages/CustomerLoginPage.jsx';
 import PaymentSuccessPage from './pages/PaymentSuccessPage.jsx';
 import CustomerSettingsPage from './pages/CustomerSettingsPage.jsx';
 import CustomerProtectedRoute from './components/CustomerProtectedRoute.jsx';
+import ContactPage from './pages/ContactPage.jsx';
+import AboutPage from './pages/AboutPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -29,11 +31,11 @@ const router = createBrowserRouter([
       { path: 'signup', element: <CustomerSignupPage /> },
       { path: 'login', element: <CustomerLoginPage /> },
       { path: 'payment-success', element: <PaymentSuccessPage /> },
+      { path: 'contact', element: <ContactPage /> },
+      { path: 'about', element: <AboutPage /> },
       { 
         element: <CustomerProtectedRoute />,
-        children: [
-          { path: 'settings', element: <CustomerSettingsPage /> },
-        ]
+        children: [{ path: 'settings', element: <CustomerSettingsPage /> }]
       },
       { 
         element: <ProtectedRoute />,

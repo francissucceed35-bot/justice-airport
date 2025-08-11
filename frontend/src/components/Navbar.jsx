@@ -4,22 +4,16 @@ import { Link, useNavigate } from 'react-router-dom';
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-
   useEffect(() => {
     const token = localStorage.getItem('customerToken');
-    if (token) {
-      setIsLoggedIn(true);
-    }
+    if (token) setIsLoggedIn(true);
   }, []);
-
   const handleLogout = () => {
-    localStorage.removeItem('customerToken');
-    localStorage.removeItem('token'); // Also clear admin token just in case
+    localStorage.clear();
     setIsLoggedIn(false);
     navigate('/');
     window.location.reload();
   };
-
   return (
     <nav className='bg-gray-900 shadow-lg w-full'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -31,9 +25,12 @@ const Navbar = () => {
             <div className='ml-10 flex items-baseline space-x-4'>
               <Link to='/flights' className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>Flights</Link>
               <Link to='/shipping' className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>Shipping</Link>
-              <a href='#' className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>Contact Us</a>
+              <Link to='/contact' className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>Contact Us</Link>
               {isLoggedIn ? (
-                <button onClick={handleLogout} className='bg-red-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700'>Logout</button>
+                <>
+                  <Link to='/settings' className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>My Account</Link>
+                  <button onClick={handleLogout} className='bg-red-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700'>Logout</button>
+                </>
               ) : (
                 <>
                   <Link to='/signup' className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>Sign Up</Link>
@@ -47,5 +44,4 @@ const Navbar = () => {
     </nav>
   );
 };
-
 export default Navbar;

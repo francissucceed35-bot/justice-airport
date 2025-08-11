@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import Hero from '../components/Hero.jsx';
 import Features from '../components/Features.jsx';
+import Testimonials from '../components/Testimonials.jsx';
 import Footer from '../components/Footer.jsx';
 
 const HomePage = () => {
@@ -13,6 +14,7 @@ const HomePage = () => {
     >
       <Hero />
       <Features />
+      <Testimonials />
       <Footer />
     </motion.div>
   );

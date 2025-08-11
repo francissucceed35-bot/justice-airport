@@ -12,8 +12,24 @@ const userRoutes = require('./routes/user.routes.js');
 const app = express();
 
 // === FINAL CORS CONFIGURATION ===
-// This is the most important part. It must come before the other app.use lines.
-app.use(cors());
+// This explicitly tells your backend to trust your Vercel frontend URLs
+const whitelist = [
+    'https://justice-airport.vercel.app', 
+    'https://justice-airport-1.vercel.app',
+    'https://justice-airport-j65d.vercel.app',
+    'https://justice-airport-pbls.vercel.app',
+    'https://justice-airport-jbr4lfp-francis-projects-4577d5d4.vercel.app'
+];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+app.use(cors(corsOptions));
 
 // Other middleware
 app.use(express.json()); 
