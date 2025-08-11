@@ -14,6 +14,9 @@ import LoginPage from './pages/LoginPage.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import CustomerSignupPage from './pages/CustomerSignupPage.jsx';
 import CustomerLoginPage from './pages/CustomerLoginPage.jsx';
+import PaymentSuccessPage from './pages/PaymentSuccessPage.jsx';
+import CustomerSettingsPage from './pages/CustomerSettingsPage.jsx';
+import CustomerProtectedRoute from './components/CustomerProtectedRoute.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +28,13 @@ const router = createBrowserRouter([
       { path: 'shipping', element: <ShippingPage /> },
       { path: 'signup', element: <CustomerSignupPage /> },
       { path: 'login', element: <CustomerLoginPage /> },
+      { path: 'payment-success', element: <PaymentSuccessPage /> },
+      { 
+        element: <CustomerProtectedRoute />,
+        children: [
+          { path: 'settings', element: <CustomerSettingsPage /> },
+        ]
+      },
       { 
         element: <ProtectedRoute />,
         children: [

@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Tooltip from './Tooltip.jsx'; // Import our new component
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const FlightForm = () => {
-  const [formData, setFormData] = useState({
-    fullName: '', email: '', departureCity: '', arrivalCity: '', departureDate: '', ticketType: 'Economy',
-  });
+  const [formData, setFormData] = useState({ fullName: '', email: '', departureCity: '', arrivalCity: '', departureDate: '', ticketType: 'Economy' });
+  const navigate = useNavigate(); // Initialize navigate
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => { setFormData({ ...formData, [e.target.name]: e.target.value }); };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:4000';
       await axios.post(`${apiUrl}/api/flights/book`, formData);
-      alert('Flight request submitted successfully!');
-      setFormData({ fullName: '', email: '', departureCity: '', arrivalCity: '', departureDate: '', ticketType: 'Economy' });
+      // On success, navigate to the success page
+      navigate('/payment-success');
     } catch (error) {
       alert('Error submitting request. Please check the console.');
       console.error('There was an error submitting the form:', error);
@@ -28,45 +25,17 @@ const FlightForm = () => {
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
+      {/* Form inputs remain the same... */}
       <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
-        <div>
-          <div className="flex items-center space-x-2 mb-1">
-            <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">Full Name</label>
-            <Tooltip text="Please enter your full legal name as it appears on your passport or government-issued ID." />
-          </div>
-          <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} required className={inputStyles} />
-        </div>
-        <div>
-          <div className="flex items-center space-x-2 mb-1">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
-            <Tooltip text="We will send your booking confirmation and any flight updates to this email address." />
-          </div>
-          <input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required className={inputStyles} />
-        </div>
-        <div>
-            <label htmlFor="departureCity" className="block text-sm font-medium text-gray-700 mb-1">Departure City</label>
-            <input type="text" name="departureCity" value={formData.departureCity} onChange={handleChange} required className={inputStyles} />
-        </div>
-        <div>
-            <label htmlFor="arrivalCity" className="block text-sm font-medium text-gray-700 mb-1">Arrival City</label>
-            <input type="text" name="arrivalCity" value={formData.arrivalCity} onChange={handleChange} required className={inputStyles} />
-        </div>
-        <div>
-            <label htmlFor="departureDate" className="block text-sm font-medium text-gray-700 mb-1">Departure Date</label>
-            <input type="date" name="departureDate" value={formData.departureDate} onChange={handleChange} required className={inputStyles} />
-        </div>
-        <div>
-            <label htmlFor="ticketType" className="block text-sm font-medium text-gray-700 mb-1">Ticket Type</label>
-            <select id="ticketType" name="ticketType" value={formData.ticketType} onChange={handleChange} required className={inputStyles}><option>Economy</option><option>Business</option><option>First Class</option></select>
-        </div>
+        <div><label htmlFor="fullName" className="block text-sm font-medium text-gray-700">Full Name</label><input type="text" name="fullName" value={formData.fullName} onChange={handleChange} required className={inputStyles} /></div>
+        <div><label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label><input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required className={inputStyles} /></div>
+        <div><label htmlFor="departureCity" className="block text-sm font-medium text-gray-700">Departure City</label><input type="text" name="departureCity" value={formData.departureCity} onChange={handleChange} required className={inputStyles} /></div>
+        <div><label htmlFor="arrivalCity" className="block text-sm font-medium text-gray-700">Arrival City</label><input type="text" name="arrivalCity" value={formData.arrivalCity} onChange={handleChange} required className={inputStyles} /></div>
+        <div><label htmlFor="departureDate" className="block text-sm font-medium text-gray-700">Departure Date</label><input type="date" name="departureDate" value={formData.departureDate} onChange={handleChange} required className={inputStyles} /></div>
+        <div><label htmlFor="ticketType" className="block text-sm font-medium text-gray-700">Ticket Type</label><select id="ticketType" name="ticketType" value={formData.ticketType} onChange={handleChange} required className={inputStyles}><option>Economy</option><option>Business</option><option>First Class</option></select></div>
       </div>
-      <div>
-        <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
-          Submit Booking Request
-        </button>
-      </div>
+      <div><button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">Submit & Proceed to Payment</button></div>
     </form>
   );
 };
-
 export default FlightForm;
