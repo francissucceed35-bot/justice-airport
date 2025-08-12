@@ -27,7 +27,7 @@ const ShippingPage = () => {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:4000';
       await axios.post(`${apiUrl}/api/shipping/request`, formData);
       alert('Success! Your shipping request has been submitted.');
-      setFormData(initialFormData); // Reset form after submission
+      setFormData(initialFormData);
     } catch (error) {
       alert('Error: Could not submit your request. Please check the details and try again.');
       console.error(error);
@@ -46,8 +46,8 @@ const ShippingPage = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className='text-4xl font-extrabold text-gray-900'>Create a New Shipment</h1>
-          <p className='mt-4 text-lg text-gray-600'>Please provide all the details for your shipment below.</p>
+          <h1 className='text-4xl font-extrabold text-gray-900'>Ship with Confidence</h1>
+          <p className='mt-4 text-lg text-gray-600'>Reliable shipping, from our door to yours. Fill in the details below to get started.</p>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">

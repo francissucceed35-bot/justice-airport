@@ -12,9 +12,10 @@ const userAuthMiddleware = (req, res, next) => {
   }
 
   try {
+    // We use the same JWT_SECRET for signing and verifying
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; 
-    next(); 
+    req.user = decoded; // Attach user info (id, name) to the request
+    next(); // Proceed to the route
   } catch (error) {
     res.status(400).send({ message: 'Invalid token.' });
   }
