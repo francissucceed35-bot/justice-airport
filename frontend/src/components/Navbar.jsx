@@ -28,7 +28,7 @@ const Navbar = () => {
           <div className='flex-shrink-0'>
             {/* LOGO IMAGE replaces the text */}
             <Link to='/' className='cursor-pointer'>
-              <img className="h-10 w-auto" src="/logo.png" alt="Justice Airport" />
+              <img className="h-10 w-auto" public="/logo.jpg" alt="Justice Airport" />
             </Link>
           </div>
           {/* Desktop Menu */}
