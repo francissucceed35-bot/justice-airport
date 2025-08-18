@@ -10,8 +10,9 @@ import ShippingPage from './pages/ShippingPage.jsx';
 import AdminDashboardPage from './pages/AdminDashboardPage.jsx';
 import AdminFlightsListPage from './pages/AdminFlightsListPage.jsx';
 import AdminShippingListPage from './pages/AdminShippingListPage.jsx';
-import LoginPage from './pages/LoginPage.jsx'; // This is Admin Login
-import CustomerSignupPage from './pages/CustomerSignupPage.jsx'; // <-- NEW
+import LoginPage from './pages/LoginPage.jsx';
+import CustomerSignupPage from './pages/CustomerSignupPage.jsx';
+import ContactUsPage from './pages/ContactUsPage.jsx'; // <-- NEW
 
 const router = createBrowserRouter([
   {
@@ -21,14 +22,15 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: 'flights', element: <FlightsPage /> },
       { path: 'shipping', element: <ShippingPage /> },
-      { path: 'signup', element: <CustomerSignupPage /> }, // <-- NEW SIGNUP ROUTE
+      { path: 'signup', element: <CustomerSignupPage /> },
+      { path: 'contact', element: <ContactUsPage /> }, // <-- NEW CONTACT ROUTE
       { path: 'admin', element: <AdminDashboardPage /> },
       { path: 'admin/flights', element: <AdminFlightsListPage /> },
       { path: 'admin/shipping', element: <AdminShippingListPage /> },
     ],
   },
   {
-    path: '/login', // This is the separate Admin Login route
+    path: '/login',
     element: <LoginPage />,
   },
 ]);
