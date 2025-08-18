@@ -4,15 +4,15 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin.model.js');
 
-// ROUTE: POST /api/auth/register (To create the first admin)
+// ROUTE: POST /api/auth/register
 router.post('/register', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const adminExists = await Admin.countDocuments();
-    if (adminExists > 0) {
-        return res.status(400).send({ message: 'An admin account already exists.' });
+    const { username, email, password } = req.body;
+    const adminExists = await Admin.findOne({ $or: [{ username }, { email }] });
+    if (adminExists) {
+      return res.status(400).send({ message: 'Admin with that username or email already exists.' });
     }
-    const admin = new Admin({ username, password });
+    const admin = new Admin({ username, email, password });
     await admin.save();
     res.status(201).send({ message: 'Admin user created successfully!' });
   } catch (error) {
@@ -23,8 +23,11 @@ router.post('/register', async (req, res) => {
 // ROUTE: POST /api/auth/login
 router.post('/login', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const admin = await Admin.findOne({ username });
+    const { identifier, password } = req.body; // Changed from username to identifier
+    const admin = await Admin.findOne({ 
+      $or: [{ username: identifier }, { email: identifier }] 
+    });
+
     if (!admin) {
       return res.status(401).send({ message: 'Invalid credentials' });
     }
