@@ -10,9 +10,10 @@ import ShippingPage from './pages/ShippingPage.jsx';
 import AdminDashboardPage from './pages/AdminDashboardPage.jsx';
 import AdminFlightsListPage from './pages/AdminFlightsListPage.jsx';
 import AdminShippingListPage from './pages/AdminShippingListPage.jsx';
-import LoginPage from './pages/LoginPage.jsx';
+import LoginPage from './pages/LoginPage.jsx'; // Admin Login
 import CustomerSignupPage from './pages/CustomerSignupPage.jsx';
-import ContactUsPage from './pages/ContactUsPage.jsx'; // <-- NEW
+import CustomerLoginPage from './pages.CustomerLoginPage.jsx'; // <-- NEW
+import ContactUsPage from './pages/ContactUsPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -23,14 +24,15 @@ const router = createBrowserRouter([
       { path: 'flights', element: <FlightsPage /> },
       { path: 'shipping', element: <ShippingPage /> },
       { path: 'signup', element: <CustomerSignupPage /> },
-      { path: 'contact', element: <ContactUsPage /> }, // <-- NEW CONTACT ROUTE
+      { path: 'login', element: <CustomerLoginPage /> }, // <-- CUSTOMER LOGIN ROUTE
+      { path: 'contact', element: <ContactUsPage /> },
       { path: 'admin', element: <AdminDashboardPage /> },
       { path: 'admin/flights', element: <AdminFlightsListPage /> },
       { path: 'admin/shipping', element: <AdminShippingListPage /> },
     ],
   },
   {
-    path: '/login',
+    path: '/admin/login', // <-- ADMIN LOGIN IS NOW SEPARATE
     element: <LoginPage />,
   },
 ]);
