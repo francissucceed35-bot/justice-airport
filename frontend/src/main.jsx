@@ -12,7 +12,7 @@ import AdminFlightsListPage from './pages/AdminFlightsListPage.jsx';
 import AdminShippingListPage from './pages/AdminShippingListPage.jsx';
 import LoginPage from './pages/LoginPage.jsx'; // Admin Login
 import CustomerSignupPage from './pages/CustomerSignupPage.jsx';
-import CustomerLoginPage from './pages.CustomerLoginPage.jsx'; // <-- NEW
+import CustomerLoginPage from './pages/CustomerLoginPage.jsx'; // Corrected Path
 import ContactUsPage from './pages/ContactUsPage.jsx';
 
 const router = createBrowserRouter([
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       { path: 'flights', element: <FlightsPage /> },
       { path: 'shipping', element: <ShippingPage /> },
       { path: 'signup', element: <CustomerSignupPage /> },
-      { path: 'login', element: <CustomerLoginPage /> }, // <-- CUSTOMER LOGIN ROUTE
+      { path: 'login', element: <CustomerLoginPage /> }, 
       { path: 'contact', element: <ContactUsPage /> },
       { path: 'admin', element: <AdminDashboardPage /> },
       { path: 'admin/flights', element: <AdminFlightsListPage /> },
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/admin/login', // <-- ADMIN LOGIN IS NOW SEPARATE
+    path: '/admin/login',
     element: <LoginPage />,
   },
 ]);
