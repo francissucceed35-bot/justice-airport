@@ -8,11 +8,10 @@ import HomePage from './pages/HomePage.jsx';
 import FlightsPage from './pages/FlightsPage.jsx';
 import ShippingPage from './pages/ShippingPage.jsx';
 import AdminDashboardPage from './pages/AdminDashboardPage.jsx';
-import LoginPage from './pages/LoginPage.jsx';
+import LoginPage from './pages/LoginPage.jsx'; // Unified Login for Admin and Customer
 import CustomerSignupPage from './pages/CustomerSignupPage.jsx';
-import CustomerLoginPage from './pages/CustomerLoginPage.jsx';
 import ContactUsPage from './pages/ContactUsPage.jsx';
-import ProtectedRoute from './components/ProtectedRoute.jsx'; // <-- NEW
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 const router = createBrowserRouter([
   {
@@ -23,10 +22,10 @@ const router = createBrowserRouter([
       { path: 'flights', element: <FlightsPage /> },
       { path: 'shipping', element: <ShippingPage /> },
       { path: 'signup', element: <CustomerSignupPage /> },
-      { path: 'login', element: <CustomerLoginPage /> },
+      { path: 'login', element: <LoginPage /> }, // <-- The single, unified login page
       { path: 'contact', element: <ContactUsPage /> },
       {
-        path: 'admin', // <-- ADMIN ROUTE
+        path: 'admin',
         element: (
           <ProtectedRoute>
             <AdminDashboardPage />
@@ -35,10 +34,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: '/admin/login',
-    element: <LoginPage />,
-  },
+  // The separate /admin/login route has been removed
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
