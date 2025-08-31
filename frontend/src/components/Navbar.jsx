@@ -59,15 +59,15 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* --- MOBILE MENU PANEL --- */}
-      {/* This section will show or hide based on the isMobileMenuOpen state */}
-      <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden`}>
+      {/* --- MOBILE MENU PANEL (UPDATED) --- */}
+      {/* I've added a background color and top border to make it stand out */}
+      <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden bg-gray-800 border-t border-gray-700`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <Link to="/" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</Link>
           <Link to="/flights" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Flights</Link>
           <Link to="/shipping" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Shipping</Link>
           <Link to="/contact" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact Us</Link>
         </div>
-        {/* Adds a separator line */}
         <div className="border-t border-gray-700 pt-4 pb-3">
           <div className="px-2 space-y-2">
             <Link to="/signup" className="block text-center font-semibold text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 px-5 py-2 rounded-md transition-all duration-300 shadow-lg">
