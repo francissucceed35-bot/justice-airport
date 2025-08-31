@@ -8,11 +8,11 @@ import HomePage from './pages/HomePage.jsx';
 import FlightsPage from './pages/FlightsPage.jsx';
 import ShippingPage from './pages/ShippingPage.jsx';
 import AdminDashboardPage from './pages/AdminDashboardPage.jsx';
-import AdminFlightsListPage from './pages/AdminFlightsListPage.jsx';
-import AdminShippingListPage from './pages/AdminShippingListPage.jsx';
-import LoginPage from './pages/LoginPage.jsx'; // Unified Login Page
+import LoginPage from './pages/LoginPage.jsx';
 import CustomerSignupPage from './pages/CustomerSignupPage.jsx';
+import CustomerLoginPage from './pages/CustomerLoginPage.jsx';
 import ContactUsPage from './pages/ContactUsPage.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx'; // <-- NEW
 
 const router = createBrowserRouter([
   {
@@ -23,14 +23,22 @@ const router = createBrowserRouter([
       { path: 'flights', element: <FlightsPage /> },
       { path: 'shipping', element: <ShippingPage /> },
       { path: 'signup', element: <CustomerSignupPage /> },
-      { path: 'login', element: <LoginPage /> }, // <-- UNIFIED LOGIN ROUTE
+      { path: 'login', element: <CustomerLoginPage /> },
       { path: 'contact', element: <ContactUsPage /> },
-      { path: 'admin', element: <AdminDashboardPage /> },
-      { path: 'admin/flights', element: <AdminFlightsListPage /> },
-      { path: 'admin/shipping', element: <AdminShippingListPage /> },
+      {
+        path: 'admin', // <-- ADMIN ROUTE
+        element: (
+          <ProtectedRoute>
+            <AdminDashboardPage />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
-  // The separate /admin/login route is no longer needed
+  {
+    path: '/admin/login',
+    element: <LoginPage />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -1,23 +1,20 @@
 const jwt = require('jsonwebtoken');
 
-const authMiddleware = (req, res, next) => {
-  const authHeader = req.header('Authorization');
-  if (!authHeader) {
-    return res.status(401).send({ message: 'Access denied. No token provided.' });
-  }
+module.exports = function (req, res, next) {
+  // Get token from header
+  const token = req.header('x-auth-token');
 
-  const token = authHeader.replace('Bearer ', '');
+  // Check if not token
   if (!token) {
-    return res.status(401).send({ message: 'Access denied. No token provided.' });
+    return res.status(401).json({ msg: 'No token, authorization denied' });
   }
 
+  // Verify token
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.admin = decoded; // Attach admin info to the request
-    next(); // Proceed to the next step
-  } catch (error) {
-    res.status(400).send({ message: 'Invalid token.' });
+    req.admin = decoded; // You can now access the admin's ID via req.admin
+    next();
+  } catch (err) {
+    res.status(401).json({ msg: 'Token is not valid' });
   }
 };
-
-module.exports = authMiddleware;
