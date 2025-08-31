@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin.model.js');
 const User = require('../models/User.model.js');
 
+// This route is for creating the initial admin account only
 router.post('/register', async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -20,37 +21,33 @@ router.post('/register', async (req, res) => {
   }
 });
 
+// This route now correctly handles encrypted passwords for BOTH admins and customers
 router.post('/login', async (req, res) => {
   try {
     const { identifier, password } = req.body;
-    let tokenPayload = null;
 
     const admin = await Admin.findOne({ $or: [{ username: identifier }, { email: identifier }] });
     if (admin) {
       const isMatch = await bcrypt.compare(password, admin.password);
       if (isMatch) {
-        tokenPayload = { id: admin._id, role: 'admin' };
-      }
-    } else {
-      const user = await User.findOne({ email: identifier });
-      if (user) {
-        const isMatch = await bcrypt.compare(password, user.password); // Use bcrypt for users too
-        if (isMatch) {
-          tokenPayload = { id: user._id, role: 'customer' };
-        }
+        const token = jwt.sign({ id: admin._id, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        return res.status(200).send({ token });
       }
     }
 
-    if (tokenPayload) {
-      const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '1d' });
-      return res.status(200).send({ token });
+    const user = await User.findOne({ email: identifier });
+    if (user) {
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (isMatch) {
+        const token = jwt.sign({ id: user._id, role: 'customer' }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        return res.status(200).send({ token });
+      }
     }
     
     return res.status(401).send({ message: 'Invalid credentials' });
 
   } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).send({ message: 'Server error' });
+    res.status(500).send({ message: 'Server error', error: error.message });
   }
 });
 
